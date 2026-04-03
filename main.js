@@ -32,6 +32,7 @@ const el = {
   attemptGrid: document.getElementById("attemptGrid"),
   completionScreen: document.getElementById("completionScreen"),
   eventToast: document.getElementById("eventToast"),
+  eventToastCard: document.getElementById("eventToastCard"),
   experimentShell: document.getElementById("experimentShell"),
   feedbackText: document.getElementById("feedbackText"),
   guessForm: document.getElementById("guessForm"),
@@ -377,22 +378,22 @@ function clearEventToast() {
     eventToastHideTimeoutId = null;
   }
 
-  el.eventToast.textContent = "";
+  el.eventToastCard.textContent = "";
   el.eventToast.className = "event-toast hidden";
 }
 
 function showEventToast(message, tone) {
   clearEventToast();
-  el.eventToast.textContent = message;
+  el.eventToastCard.textContent = message;
   el.eventToast.className = `event-toast ${tone}`;
 
   eventToastFadeTimeoutId = window.setTimeout(() => {
     el.eventToast.classList.add("is-fading");
-  }, 1100);
+  }, 1680);
 
   eventToastHideTimeoutId = window.setTimeout(() => {
     clearEventToast();
-  }, 1500);
+  }, 2000);
 }
 
 function updateMeta() {

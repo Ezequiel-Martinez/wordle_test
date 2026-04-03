@@ -86,32 +86,38 @@ input {
 
 .event-toast {
   position: fixed;
-  top: 24px;
-  left: 50%;
-  z-index: 20;
-  min-width: min(92vw, 420px);
-  padding: 14px 20px;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
   margin: 0;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
-  transform: translateX(-50%);
-  text-align: center;
-  font-size: clamp(24px, 5vw, 34px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  background: rgba(15, 23, 42, 0.76);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   opacity: 1;
-  transition: opacity 280ms ease;
+  transition: opacity 320ms ease;
 }
 
-.event-toast.negative {
-  color: var(--danger);
-  border: 1px solid rgba(198, 40, 40, 0.18);
+.event-toast-card {
+  width: min(100%, 560px);
+  padding: 28px 22px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 28px 60px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  text-align: center;
+  font-size: clamp(32px, 9vw, 68px);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -0.05em;
 }
 
-.event-toast.warning {
-  color: var(--danger);
-  border: 1px solid rgba(198, 40, 40, 0.18);
+.event-toast.negative .event-toast-card,
+.event-toast.warning .event-toast-card {
+  color: #e53935;
 }
 
 .event-toast.is-fading {
