@@ -47,6 +47,10 @@ body {
   color: var(--text);
 }
 
+body.toast-active {
+  overflow: hidden;
+}
+
 button,
 input {
   font: inherit;
@@ -91,7 +95,11 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding:
+    max(20px, env(safe-area-inset-top))
+    max(20px, env(safe-area-inset-right))
+    max(20px, env(safe-area-inset-bottom))
+    max(20px, env(safe-area-inset-left));
   margin: 0;
   background: rgba(15, 23, 42, 0.76);
   backdrop-filter: blur(3px);

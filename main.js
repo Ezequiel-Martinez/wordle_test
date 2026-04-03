@@ -53,6 +53,7 @@ let state = null;
 let scoreDeltaTimeoutId = null;
 let eventToastFadeTimeoutId = null;
 let eventToastHideTimeoutId = null;
+let eventToastFocusTimeoutId = null;
 let validWords = [];
 let validWordSet = new Set();
 let keywordPool = [];
@@ -378,14 +379,22 @@ function clearEventToast() {
     eventToastHideTimeoutId = null;
   }
 
+  document.body.classList.remove("toast-active");
   el.eventToastCard.textContent = "";
   el.eventToast.className = "event-toast hidden";
 }
 
 function showEventToast(message, tone) {
+  if (eventToastFocusTimeoutId) {
+    window.clearTimeout(eventToastFocusTimeoutId);
+    eventToastFocusTimeoutId = null;
+  }
+
   clearEventToast();
+  el.guessInput.blur();
   el.eventToastCard.textContent = message;
   el.eventToast.className = `event-toast ${tone}`;
+  document.body.classList.add("toast-active");
 
   eventToastFadeTimeoutId = window.setTimeout(() => {
     el.eventToast.classList.add("is-fading");
@@ -723,10 +732,19 @@ function handleWrongAttempt(guess, feedback) {
 
   state.transitionLocked = false;
   setFormDisabled(false);
+
+  if (state.mode === "loss_aversion" || state.mode === "utility") {
+    eventToastFocusTimeoutId = window.setTimeout(() => {
+      focusGuessInput();
+    }, 2050);
+    return;
+  }
+
   focusGuessInput();
 }
 
 function submitGuess(rawValue) {
+  el.guessInput.blur();
   const trimmedValue = rawValue.trim();
   if (trimmedValue === SPECIAL_TEST_WORD) {
     clearValidation();
