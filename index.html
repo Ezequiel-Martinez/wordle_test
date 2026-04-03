@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patr&oacute;n de Palabras</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="experimentShell" class="experiment-shell" aria-live="polite">
+        <div class="meta-row">
+          <span id="roundMeta" class="meta-text">Ronda 1 de 5</span>
+          <span id="secondaryMeta" class="meta-text hidden"></span>
+          <span id="scoreDelta" class="meta-delta hidden" aria-live="polite"></span>
+        </div>
+
+        <div id="eventToast" class="event-toast hidden" aria-live="polite"></div>
+
+        <section class="word-panel">
+          <div class="panel-head">
+            <p class="panel-kicker">Palabra de 5 letras</p>
+            <p class="panel-rules">
+              <span class="rule rule-green">Verde: letra y lugar correctos.</span>
+              <span class="rule rule-yellow">Amarillo: la letra est&aacute; pero va en otro lugar.</span>
+              <span class="rule rule-gray">Gris: la letra no est&aacute;.</span>
+            </p>
+            <p class="panel-note">La grilla muestra solo los &uacute;ltimos 4 intentos.</p>
+          </div>
+
+          <div id="attemptGrid" class="attempt-grid" aria-live="polite"></div>
+        </section>
+
+        <form id="guessForm" class="guess-form" novalidate>
+          <label class="input-label" for="guessInput">Escrib&iacute; tu palabra</label>
+          <div id="inputShell" class="input-shell">
+            <input
+              id="guessInput"
+              class="guess-input"
+              type="text"
+              inputmode="text"
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+              maxlength="24"
+              placeholder="5 letras"
+            />
+            <button id="submitButton" class="primary-button" type="submit">Enviar</button>
+          </div>
+          <p id="validationMessage" class="validation-message" aria-live="polite"> </p>
+        </form>
+
+        <p id="feedbackText" class="feedback-text"> </p>
+      </section>
+
+      <section id="completionScreen" class="completion-screen hidden">
+        <div class="completion-card">
+          <p class="completion-kicker">Sesi&oacute;n completada</p>
+          <h1>Gracias.</h1>
+          <p>Tus respuestas fueron registradas.</p>
+        </div>
+      </section>
+    </main>
+
+    <div id="modalBackdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <div id="modalText" class="modal-copy"></div>
+        <div class="modal-actions">
+          <button id="modalSecondary" class="secondary-button hidden" type="button"></button>
+          <button id="modalPrimary" class="primary-button" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+      import {
+        getDatabase,
+        onDisconnect,
+        ref,
+        serverTimestamp,
+        set
+      } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBJTWudIZOvbTddc938i_4eHBCJ_7K1usY",
+        authDomain: "curiosity-vs-utility.firebaseapp.com",
+        databaseURL: "https://curiosity-vs-utility-default-rtdb.firebaseio.com/",
+        projectId: "curiosity-vs-utility",
+        storageBucket: "curiosity-vs-utility.firebasestorage.app",
+        messagingSenderId: "927110688695",
+        appId: "1:927110688695:web:9e5443d98b7400d1118232"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+
+      window.FirebaseRuntime = {
+        db,
+        onDisconnect,
+        ref,
+        serverTimestamp,
+        set
+      };
+    </script>
+    <script src="database.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
