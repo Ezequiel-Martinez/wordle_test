@@ -72,6 +72,7 @@
       </div>
     </div>
 
+    <script src="firebase-config.js"></script>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
       import {
@@ -82,26 +83,24 @@
         set
       } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyBJTWudIZOvbTddc938i_4eHBCJ_7K1usY",
-        authDomain: "curiosity-vs-utility.firebaseapp.com",
-        databaseURL: "https://curiosity-vs-utility-default-rtdb.firebaseio.com/",
-        projectId: "curiosity-vs-utility",
-        storageBucket: "curiosity-vs-utility.firebasestorage.app",
-        messagingSenderId: "927110688695",
-        appId: "1:927110688695:web:9e5443d98b7400d1118232"
-      };
+      const firebaseConfig = window.__FIREBASE_CONFIG__;
 
-      const app = initializeApp(firebaseConfig);
-      const db = getDatabase(app);
+      if (!firebaseConfig) {
+        console.warn(
+          "Firebase config was not found. Create firebase-config.js from firebase-config.example.js.",
+        );
+      } else {
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-      window.FirebaseRuntime = {
-        db,
-        onDisconnect,
-        ref,
-        serverTimestamp,
-        set
-      };
+        window.FirebaseRuntime = {
+          db,
+          onDisconnect,
+          ref,
+          serverTimestamp,
+          set
+        };
+      }
     </script>
     <script src="database.js"></script>
     <script src="main.js"></script>
